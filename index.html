@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persistent Confirmation Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        .container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%; 
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .count {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Confirm Participation</h1>
+        <form id="confirmationForm">
+            <label for="name1">First Name:</label>
+            <input type="text" id="name1" name="name1" required>
+
+            <label for="name2">Second Name:</label>
+            <input type="text" id="name2" name="name2">
+
+            <label for="name3">Last Name:</label>
+            <input type="text" id="name3" name="name3">
+
+            <label for="location">Country:</label>
+            <input type="text" id="location" name="location" required>
+
+            <label for="languages">Language:</label>
+            <input type="text" id="languages" name="languages" required>
+
+            <button type="button" onclick="confirmParticipation()">Confirm</button>
+        </form>
+
+        <div class="count">
+            Total Confirmed: <span id="confirmedCount">0</span>
+        </div>
+    </div>
+
+    <script>
+        // Initialize count from localStorage
+        let confirmedCount = parseInt(localStorage.getItem('confirmedCount')) || 0;
+
+        // Display the current count on page load
+        document.getElementById('confirmedCount').textContent = confirmedCount;
+
+        function confirmParticipation() {
+            const name1 = document.getElementById('name1').value;
+            const location = document.getElementById('location').value;
+            const languages = document.getElementById('languages').value;
+
+            if (name1 && location && languages) {
+                // Increment and save the count to localStorage
+                confirmedCount++;
+                localStorage.setItem('confirmedCount', confirmedCount);
+
+                // Update the displayed count
+                document.getElementById('confirmedCount').textContent = confirmedCount;
+
+                // Clear the form fields
+                document.getElementById('confirmationForm').reset();
+
+                alert('Thank you for confirming your participation!');
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        }
+    </script>
+</body>
+</html>
